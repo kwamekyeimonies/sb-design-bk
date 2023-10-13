@@ -1,7 +1,7 @@
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 import Cookies from 'js-cookie';
 
-const baseURL = 'http://127.0.0.1:9075';
+const baseURL = 'http://127.0.0.1:9075/api/v1';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: baseURL,

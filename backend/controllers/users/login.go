@@ -66,8 +66,9 @@ func (userControl *UserController) LoginUserController(ctx *gin.Context) {
 	ctx.SetCookie("token", tokenString, int(cookiesExpiration-time.Now().Unix()), "/", "", false, false)
 
 	ctx.JSON(200, gin.H{
-		"message":  "user logged in",
+		"message":  "Login successful",
 		"response": response,
+		"token":    tokenString,
 	})
 
 }
