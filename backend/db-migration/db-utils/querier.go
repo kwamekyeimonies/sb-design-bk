@@ -11,15 +11,23 @@ import (
 )
 
 type Querier interface {
+	CreateCustomer(ctx context.Context, arg CreateCustomerParams) (Customer, error)
+	CreateCustomerAccount(ctx context.Context, arg CreateCustomerAccountParams) (CustomerAccount, error)
+	CreateCustomerLogs(ctx context.Context, arg CreateCustomerLogsParams) (CustomerLog, error)
+	CreateCustomerNotification(ctx context.Context, arg CreateCustomerNotificationParams) (CustomerNotification, error)
 	CreateOTP(ctx context.Context, arg CreateOTPParams) (Otp, error)
+	CreateTransactions(ctx context.Context, arg CreateTransactionsParams) (Transaction, error)
+	CreateUserLogs(ctx context.Context, arg CreateUserLogsParams) (UsersLog, error)
 	CreateUsers(ctx context.Context, arg CreateUsersParams) (User, error)
 	DeleteUser(ctx context.Context, id uuid.UUID) error
 	ForgetPassword(ctx context.Context, arg ForgetPasswordParams) error
 	GetAllUsers(ctx context.Context) ([]GetAllUsersRow, error)
+	GetCustomerAccount(ctx context.Context, id uuid.UUID) (CustomerAccount, error)
 	GetOTPByUserID(ctx context.Context, userID uuid.UUID) (Otp, error)
 	GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error)
 	GetUserById(ctx context.Context, id uuid.UUID) (GetUserByIdRow, error)
 	GetUserByPhoneNumber(ctx context.Context, phoneNumber string) (GetUserByPhoneNumberRow, error)
+	UpdateCustomerAccount(ctx context.Context, arg UpdateCustomerAccountParams) error
 	UpdateOTP(ctx context.Context, arg UpdateOTPParams) error
 	UpdateUser(ctx context.Context, arg UpdateUserParams) error
 	UpdateUserPhoneNumber(ctx context.Context, arg UpdateUserPhoneNumberParams) error
