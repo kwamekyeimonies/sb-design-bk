@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/jackc/pgx/v5/pgtype"
 )
 
 const createCustomerAccount = `-- name: CreateCustomerAccount :one
@@ -34,19 +33,19 @@ INSERT INTO customer_account(
 `
 
 type CreateCustomerAccountParams struct {
-	ID             uuid.UUID   `json:"id"`
-	AccountName    string      `json:"account_name"`
-	AccountNumber  string      `json:"account_number"`
-	AccountType    string      `json:"account_type"`
-	AccountBalance string      `json:"account_balance"`
-	InitialDeposit string      `json:"initial_deposit"`
-	CurrentAmount  string      `json:"current_amount"`
-	CustomerID     pgtype.UUID `json:"customer_id"`
-	CreatedAt      time.Time   `json:"created_at"`
-	UpdatedAt      time.Time   `json:"updated_at"`
-	IsDeleted      bool        `json:"is_deleted"`
-	DeletedAt      time.Time   `json:"deleted_at"`
-	PhoneNumber    string      `json:"phone_number"`
+	ID             uuid.UUID `json:"id"`
+	AccountName    string    `json:"account_name"`
+	AccountNumber  string    `json:"account_number"`
+	AccountType    string    `json:"account_type"`
+	AccountBalance string    `json:"account_balance"`
+	InitialDeposit string    `json:"initial_deposit"`
+	CurrentAmount  string    `json:"current_amount"`
+	CustomerID     uuid.UUID `json:"customer_id"`
+	CreatedAt      time.Time `json:"created_at"`
+	UpdatedAt      time.Time `json:"updated_at"`
+	IsDeleted      bool      `json:"is_deleted"`
+	DeletedAt      time.Time `json:"deleted_at"`
+	PhoneNumber    string    `json:"phone_number"`
 }
 
 func (q *Queries) CreateCustomerAccount(ctx context.Context, arg CreateCustomerAccountParams) (CustomerAccount, error) {

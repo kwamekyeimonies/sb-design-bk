@@ -7,7 +7,7 @@ CREATE TABLE customer_account(
     account_balance TEXT NOT NULL DEFAULT '',
     initial_deposit TEXT NOT NULL DEFAULT '',
     current_amount TEXT NOT NULL DEFAULT '',
-    customer_id UUID REFERENCES customer(id),
+    customer_id UUID REFERENCES customer(id) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     is_deleted BOOLEAN NOT NULL DEFAULT False,
