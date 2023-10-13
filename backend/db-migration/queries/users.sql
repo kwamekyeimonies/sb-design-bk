@@ -7,17 +7,18 @@ INSERT INTO users(
     updated_at,
     is_deleted,
     deleted_at,
+    dob,
     phone_number,
     profile_pic,
     user_status,
     password,
     role,
-    organization,
+    bank_branch,
     is_verified,
     api_key
     
 )VALUES(
-    $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,
+    $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
     encode(sha256(random()::text::bytea),'hex')
 )RETURNING *;
 
@@ -26,15 +27,15 @@ SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,a
 FROM users;
 
 -- name: GetUserById :one
-SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key ,password,organization
+SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key ,password,bank_branch,dob
 FROM users WHERE id = $1 AND is_deleted=False;
 
 -- name: GetUserByPhoneNumber :one
-SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key,password ,organization
+SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key,password ,bank_branch,dob
 FROM users WHERE phone_number = $1 AND is_deleted=False;
 
 -- name: GetUserByEmail :one
-SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key,password,is_verified,organization 
+SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key,password,is_verified,bank_branch ,dob
 FROM users WHERE email = $1 AND is_deleted=False;
 
 -- name: DeleteUser :exec

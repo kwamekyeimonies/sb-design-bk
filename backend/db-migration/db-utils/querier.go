@@ -11,7 +11,12 @@ import (
 )
 
 type Querier interface {
+	CreateCustomerAccount(ctx context.Context, arg CreateCustomerAccountParams) (CustomerAccount, error)
+	CreateCustomerLogs(ctx context.Context, arg CreateCustomerLogsParams) (CustomerLog, error)
+	CreateCustomerNotification(ctx context.Context, arg CreateCustomerNotificationParams) (CustomerNotification, error)
 	CreateOTP(ctx context.Context, arg CreateOTPParams) (Otp, error)
+	CreateTransactions(ctx context.Context, arg CreateTransactionsParams) (Transaction, error)
+	CreateUserLogs(ctx context.Context, arg CreateUserLogsParams) (UsersLog, error)
 	CreateUsers(ctx context.Context, arg CreateUsersParams) (User, error)
 	DeleteUser(ctx context.Context, id uuid.UUID) error
 	ForgetPassword(ctx context.Context, arg ForgetPasswordParams) error

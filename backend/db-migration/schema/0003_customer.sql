@@ -2,14 +2,14 @@
 SELECT * FROM pg_extension WHERE extname = 'uuid-ossp';
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-CREATE TABLE users(
+CREATE TABLE customer
+(
     id UUID PRIMARY KEY,
     full_name TEXT NOT NULL DEFAULT '',
     email TEXT NOT NULL UNIQUE,
     role TEXT NOT NULL DEFAULT 'User',
     password TEXT NOT NULL,
-    bank_branch TEXT NOT NULL DEFAULT '',
-    dob TEXT NOT NULL DEFAULT '',
+    organization TEXT NOT NULL DEFAULT '',
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     is_deleted BOOLEAN NOT NULL DEFAULT False,

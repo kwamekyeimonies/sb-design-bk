@@ -21,36 +21,38 @@ INSERT INTO users(
     updated_at,
     is_deleted,
     deleted_at,
+    dob,
     phone_number,
     profile_pic,
     user_status,
     password,
     role,
-    organization,
+    bank_branch,
     is_verified,
     api_key
     
 )VALUES(
-    $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,
+    $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,
     encode(sha256(random()::text::bytea),'hex')
-)RETURNING id, full_name, email, role, password, organization, created_at, updated_at, is_deleted, deleted_at, phone_number, profile_pic, user_status, is_verified, api_key
+)RETURNING id, full_name, email, role, password, bank_branch, dob, created_at, updated_at, is_deleted, deleted_at, phone_number, profile_pic, user_status, is_verified, api_key
 `
 
 type CreateUsersParams struct {
-	ID           uuid.UUID `json:"id"`
-	FullName     string    `json:"full_name"`
-	Email        string    `json:"email"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
-	IsDeleted    bool      `json:"is_deleted"`
-	DeletedAt    time.Time `json:"deleted_at"`
-	PhoneNumber  string    `json:"phone_number"`
-	ProfilePic   string    `json:"profile_pic"`
-	UserStatus   bool      `json:"user_status"`
-	Password     string    `json:"password"`
-	Role         string    `json:"role"`
-	Organization string    `json:"organization"`
-	IsVerified   bool      `json:"is_verified"`
+	ID          uuid.UUID `json:"id"`
+	FullName    string    `json:"full_name"`
+	Email       string    `json:"email"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	IsDeleted   bool      `json:"is_deleted"`
+	DeletedAt   time.Time `json:"deleted_at"`
+	Dob         string    `json:"dob"`
+	PhoneNumber string    `json:"phone_number"`
+	ProfilePic  string    `json:"profile_pic"`
+	UserStatus  bool      `json:"user_status"`
+	Password    string    `json:"password"`
+	Role        string    `json:"role"`
+	BankBranch  string    `json:"bank_branch"`
+	IsVerified  bool      `json:"is_verified"`
 }
 
 func (q *Queries) CreateUsers(ctx context.Context, arg CreateUsersParams) (User, error) {
@@ -62,12 +64,13 @@ func (q *Queries) CreateUsers(ctx context.Context, arg CreateUsersParams) (User,
 		arg.UpdatedAt,
 		arg.IsDeleted,
 		arg.DeletedAt,
+		arg.Dob,
 		arg.PhoneNumber,
 		arg.ProfilePic,
 		arg.UserStatus,
 		arg.Password,
 		arg.Role,
-		arg.Organization,
+		arg.BankBranch,
 		arg.IsVerified,
 	)
 	var i User
@@ -77,7 +80,8 @@ func (q *Queries) CreateUsers(ctx context.Context, arg CreateUsersParams) (User,
 		&i.Email,
 		&i.Role,
 		&i.Password,
-		&i.Organization,
+		&i.BankBranch,
+		&i.Dob,
 		&i.CreatedAt,
 		&i.UpdatedAt,
 		&i.IsDeleted,
@@ -171,23 +175,24 @@ func (q *Queries) GetAllUsers(ctx context.Context) ([]GetAllUsersRow, error) {
 }
 
 const getUserByEmail = `-- name: GetUserByEmail :one
-SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key,password,is_verified,organization 
+SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key,password,is_verified,bank_branch ,dob
 FROM users WHERE email = $1 AND is_deleted=False
 `
 
 type GetUserByEmailRow struct {
-	ID           uuid.UUID `json:"id"`
-	FullName     string    `json:"full_name"`
-	Email        string    `json:"email"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
-	PhoneNumber  string    `json:"phone_number"`
-	ProfilePic   string    `json:"profile_pic"`
-	Role         string    `json:"role"`
-	ApiKey       string    `json:"api_key"`
-	Password     string    `json:"password"`
-	IsVerified   bool      `json:"is_verified"`
-	Organization string    `json:"organization"`
+	ID          uuid.UUID `json:"id"`
+	FullName    string    `json:"full_name"`
+	Email       string    `json:"email"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	PhoneNumber string    `json:"phone_number"`
+	ProfilePic  string    `json:"profile_pic"`
+	Role        string    `json:"role"`
+	ApiKey      string    `json:"api_key"`
+	Password    string    `json:"password"`
+	IsVerified  bool      `json:"is_verified"`
+	BankBranch  string    `json:"bank_branch"`
+	Dob         string    `json:"dob"`
 }
 
 func (q *Queries) GetUserByEmail(ctx context.Context, email string) (GetUserByEmailRow, error) {
@@ -205,28 +210,30 @@ func (q *Queries) GetUserByEmail(ctx context.Context, email string) (GetUserByEm
 		&i.ApiKey,
 		&i.Password,
 		&i.IsVerified,
-		&i.Organization,
+		&i.BankBranch,
+		&i.Dob,
 	)
 	return i, err
 }
 
 const getUserById = `-- name: GetUserById :one
-SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key ,password,organization
+SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key ,password,bank_branch,dob
 FROM users WHERE id = $1 AND is_deleted=False
 `
 
 type GetUserByIdRow struct {
-	ID           uuid.UUID `json:"id"`
-	FullName     string    `json:"full_name"`
-	Email        string    `json:"email"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
-	PhoneNumber  string    `json:"phone_number"`
-	ProfilePic   string    `json:"profile_pic"`
-	Role         string    `json:"role"`
-	ApiKey       string    `json:"api_key"`
-	Password     string    `json:"password"`
-	Organization string    `json:"organization"`
+	ID          uuid.UUID `json:"id"`
+	FullName    string    `json:"full_name"`
+	Email       string    `json:"email"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	PhoneNumber string    `json:"phone_number"`
+	ProfilePic  string    `json:"profile_pic"`
+	Role        string    `json:"role"`
+	ApiKey      string    `json:"api_key"`
+	Password    string    `json:"password"`
+	BankBranch  string    `json:"bank_branch"`
+	Dob         string    `json:"dob"`
 }
 
 func (q *Queries) GetUserById(ctx context.Context, id uuid.UUID) (GetUserByIdRow, error) {
@@ -243,28 +250,30 @@ func (q *Queries) GetUserById(ctx context.Context, id uuid.UUID) (GetUserByIdRow
 		&i.Role,
 		&i.ApiKey,
 		&i.Password,
-		&i.Organization,
+		&i.BankBranch,
+		&i.Dob,
 	)
 	return i, err
 }
 
 const getUserByPhoneNumber = `-- name: GetUserByPhoneNumber :one
-SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key,password ,organization
+SELECT id,full_name, email,created_at,updated_at,phone_number,profile_pic,role,api_key,password ,bank_branch,dob
 FROM users WHERE phone_number = $1 AND is_deleted=False
 `
 
 type GetUserByPhoneNumberRow struct {
-	ID           uuid.UUID `json:"id"`
-	FullName     string    `json:"full_name"`
-	Email        string    `json:"email"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
-	PhoneNumber  string    `json:"phone_number"`
-	ProfilePic   string    `json:"profile_pic"`
-	Role         string    `json:"role"`
-	ApiKey       string    `json:"api_key"`
-	Password     string    `json:"password"`
-	Organization string    `json:"organization"`
+	ID          uuid.UUID `json:"id"`
+	FullName    string    `json:"full_name"`
+	Email       string    `json:"email"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	PhoneNumber string    `json:"phone_number"`
+	ProfilePic  string    `json:"profile_pic"`
+	Role        string    `json:"role"`
+	ApiKey      string    `json:"api_key"`
+	Password    string    `json:"password"`
+	BankBranch  string    `json:"bank_branch"`
+	Dob         string    `json:"dob"`
 }
 
 func (q *Queries) GetUserByPhoneNumber(ctx context.Context, phoneNumber string) (GetUserByPhoneNumberRow, error) {
@@ -281,7 +290,8 @@ func (q *Queries) GetUserByPhoneNumber(ctx context.Context, phoneNumber string) 
 		&i.Role,
 		&i.ApiKey,
 		&i.Password,
-		&i.Organization,
+		&i.BankBranch,
+		&i.Dob,
 	)
 	return i, err
 }
