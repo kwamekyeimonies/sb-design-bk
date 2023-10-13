@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { Alert } from '@mui/material';
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -12,9 +11,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Image from "next/image";
 import { redirect } from 'next/navigation';
-import { useDispatch } from "react-redux";
 import { useLoginUserMutation } from "@/slices/auth-slice";
 
 
@@ -54,14 +51,14 @@ export default function SignIn() {
         }
 
         try {
-            console.log(userData.email, userData.password);
+            loginUser({
+                email: userData.email,
+                password: userData.password
+            })
         } catch (error) {
             console.log(error);
         }
     };
-
-
-
 
     return (
         <ThemeProvider theme={defaultTheme}>

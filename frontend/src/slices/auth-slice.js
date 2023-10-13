@@ -1,5 +1,4 @@
 import { apiSlice } from "@/api/api-slice";
-import build from "next/dist/build";
 
 export const authenticationSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -12,7 +11,7 @@ export const authenticationSlice = apiSlice.injectEndpoints({
                 }
             })
         }),
-        loginUser: build.mutation({
+        loginUser: builder.mutation({
             query: ({ email, password }) => ({
                 url: "/login",
                 method: "POST",

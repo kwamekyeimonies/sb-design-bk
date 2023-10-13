@@ -1,14 +1,10 @@
 'use client'
 import * as React from "react";
 import { Alert } from '@mui/material';
-import { useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -16,8 +12,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import SignIn from "../signin/page";
-import Image from "next/image";
-import savsignlogo from "@/images/savsignlogo.jpg";
 import { redirect } from 'next/navigation';
 
 const defaultTheme = createTheme();
@@ -83,16 +77,7 @@ export default function SignUp() {
                         justifyContent: 'center',
                         alignItems: 'center',
                     }}>
-                        <Image
-                            src={savsignlogo}
-                            alt="Savsign Logo"
-                            width={200}
-                            height={100}
-                            style={{
-                                objectFit: 'contain'
 
-                            }}
-                        />
                     </div>
                     <Typography
                         sx={{
