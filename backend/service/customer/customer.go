@@ -10,6 +10,10 @@ import (
 
 type CustomerRespository interface {
 	CreateAccount(customer *models.Customer, ctx context.Context) (*db.Customer, *db.CustomerAccount, *string, error)
+	LoanMoneyToCustomer(customerAcc *models.CustomerLoans, ctx context.Context) (*string, error)
+	DepositMoney(customerAcc *models.CustomerAccount, ctx context.Context) (*string, error)
+	WithdrawMoney(customerAcc *models.CustomerAccount, ctx context.Context) (*string, error)
+	GetCustomerAccountDetails(customer *models.Customer, ctx context.Context) (*db.CustomerAccount, error)
 }
 
 type CustomerServiceImpl struct {

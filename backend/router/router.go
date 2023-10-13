@@ -20,5 +20,9 @@ func AuthenticatedRoutes(routes *gin.RouterGroup) {
 	customerRoutes := customer.CustomerController{}
 
 	routes.POST("/customer/create", customerRoutes.CreateCustomerController)
+	routes.POST("/customer/deposit", customerRoutes.DepositCustomerController)
+	routes.POST("/customer/withdraw", customerRoutes.WithDrawCustomerController)
+	routes.POST("/customer/loan", customerRoutes.LoanCustomerController)
+	routes.POST("/customer/account", customerRoutes.GetCustomerAccountController)
 
 }

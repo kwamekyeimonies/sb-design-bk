@@ -13,6 +13,7 @@ import (
 type Querier interface {
 	CreateCustomer(ctx context.Context, arg CreateCustomerParams) (Customer, error)
 	CreateCustomerAccount(ctx context.Context, arg CreateCustomerAccountParams) (CustomerAccount, error)
+	CreateCustomerLoan(ctx context.Context, arg CreateCustomerLoanParams) (CustomerLoan, error)
 	CreateCustomerLogs(ctx context.Context, arg CreateCustomerLogsParams) (CustomerLog, error)
 	CreateCustomerNotification(ctx context.Context, arg CreateCustomerNotificationParams) (CustomerNotification, error)
 	CreateOTP(ctx context.Context, arg CreateOTPParams) (Otp, error)
@@ -28,6 +29,7 @@ type Querier interface {
 	GetUserById(ctx context.Context, id uuid.UUID) (GetUserByIdRow, error)
 	GetUserByPhoneNumber(ctx context.Context, phoneNumber string) (GetUserByPhoneNumberRow, error)
 	UpdateCustomerAccount(ctx context.Context, arg UpdateCustomerAccountParams) error
+	UpdateLoanTransaction(ctx context.Context, arg UpdateLoanTransactionParams) error
 	UpdateOTP(ctx context.Context, arg UpdateOTPParams) error
 	UpdateUser(ctx context.Context, arg UpdateUserParams) error
 	UpdateUserPhoneNumber(ctx context.Context, arg UpdateUserPhoneNumberParams) error
