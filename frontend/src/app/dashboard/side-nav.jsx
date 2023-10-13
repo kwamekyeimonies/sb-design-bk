@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import Link from 'next/link';
 
-const pages = ['Deposit', 'Withdrawal', 'Loan'];
+const pages = ['Deposit', 'Withdrawal', 'Loan', 'Customer'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {

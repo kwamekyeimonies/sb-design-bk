@@ -25,6 +25,37 @@ export const authenticationSlice = apiSlice.injectEndpoints({
                     password: password
                 },
             })
+        }),
+        getCustomerAccount: builder.mutation({
+            query: ({ customerAccountNumber }) => ({
+                url: "/customer/account",
+                method: "POST",
+                body: {
+                    customer_id: customerAccountNumber,
+                }
+            })
+        }),
+        createCustomerAccount: builder.mutation({
+            query: ({ full_name, email,
+                currency_type,
+                account_type,
+                account_balance,
+                initial_deposit,
+                phone_number,
+                user_id, }) => ({
+                    url: "/customer/create",
+                    method: "POST",
+                    body: {
+                        full_name,
+                        email,
+                        currency_type,
+                        account_type,
+                        account_balance,
+                        initial_deposit,
+                        phone_number,
+                        user_id,
+                    }
+                })
         })
     })
 })
@@ -33,4 +64,6 @@ export const authenticationSlice = apiSlice.injectEndpoints({
 export const {
     useCreateUserAccountMutation,
     useLoginUserMutation,
+    useGetCustomerAccountMutation,
+    useCreateCustomerAccountMutation
 } = authenticationSlice;
