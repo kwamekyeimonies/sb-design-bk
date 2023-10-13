@@ -3,6 +3,7 @@ package customer
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -17,6 +18,8 @@ func (customerS *CustomerServiceImpl) DepositMoney(customerAcc *models.CustomerA
 	if err != nil {
 		return nil, errors.New("Customer Account does not exist")
 	}
+
+	fmt.Println(dbResponse.CurrentAmount)
 
 	customerDetails := dbResponse
 	depositAmount, err := utils.ConvertToDouble(customerAcc.DepsitAmount)
@@ -46,10 +49,10 @@ func (customerS *CustomerServiceImpl) DepositMoney(customerAcc *models.CustomerA
 		CustomerID:        customerAcc.CustomerID,
 		UserID:            customerAcc.UserId,
 		CustomerAccountID: customerAcc.CustomerID,
-		Description:       customerAcc.Description,
+		Description:       "Deposit",
 		InitialAmount:     dbResponse.InitialDeposit,
 		FinalAmount:       customerDetails.AccountBalance,
-		TransactionType:   customerAcc.AccountType,
+		TransactionType:   dbResponse.AccountType,
 		CreatedAt:         time.Now(),
 		UpdatedAt:         time.Now(),
 		IsDeleted:         false,

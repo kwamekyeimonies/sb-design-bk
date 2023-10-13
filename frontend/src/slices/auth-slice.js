@@ -56,7 +56,49 @@ export const authenticationSlice = apiSlice.injectEndpoints({
                         user_id,
                     }
                 })
+        }),
+        createCustomerDeposit: builder.mutation({
+            query: ({ deposit_amount,
+                customer_id,
+                user_id }) => ({
+                    url: "/customer/deposit",
+                    method: "POST",
+                    body: {
+                        deposit_amount,
+                        customer_id,
+                        user_id,
+                    }
+                })
+        }),
+        withdrawCustomerAmount: builder.mutation({
+            query: ({ deposit_amount,
+                customer_id,
+                user_id }) => ({
+                    url: "/customer/withdraw",
+                    method: "POST",
+                    body: {
+                        deposit_amount,
+                        customer_id,
+                        user_id,
+                    }
+                })
+        }),
+        loanCustomerAmount: builder.mutation({
+            query: ({
+                customer_id,
+                loan_amount,
+                paid_amount,
+                user_id,
+            }) => ({
+                url: "/customer/loan",
+                method: "POST",
+                body: {
+                    customer_id, loan_amount, paid_amount, user_id
+                }
+            })
+
         })
+
     })
 })
 
@@ -65,5 +107,8 @@ export const {
     useCreateUserAccountMutation,
     useLoginUserMutation,
     useGetCustomerAccountMutation,
-    useCreateCustomerAccountMutation
+    useCreateCustomerAccountMutation,
+    useCreateCustomerDepositMutation,
+    useWithdrawCustomerAmountMutation,
+    useLoanCustomerAmountMutation
 } = authenticationSlice;

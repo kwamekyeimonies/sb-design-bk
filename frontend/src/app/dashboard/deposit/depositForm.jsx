@@ -11,15 +11,16 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { redirect } from 'next/navigation';
-import { useCreateUserAccountMutation } from "@/slices/auth-slice";
+import { useCreateCustomerDepositMutation, useCreateUserAccountMutation } from "@/slices/auth-slice";
 import { useDispatch } from "react-redux";
 import { authenticate } from "@/api/authenticationReducer";
+import Cookies from "js-cookie";
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
 
-    const [createNewUserAccount, { data, isError, error, isSuccess, isLoading }] = useCreateUserAccountMutation();
+    const [createNewUserAccount, { data, isError, error, isSuccess, isLoading }] = useCreateCustomerDepositMutation();
 
     const dispatch = useDispatch();
 
@@ -27,22 +28,16 @@ export default function SignUp() {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
         const userData = {
-            full_name: formData.get('accountNumber'),
-            phone_number: formData.get('phone_number'),
-            bank_branch: formData.get('bank_branch'),
-            dob: formData.get('dob'),
-            depositAmount: formData.get('depositAmount'),
-            password: formData.get('password'),
+            customer_id: formData.get('accountNumber'),
+            deposit_amount: formData.get('depositAmount'),
+            user_id: Cookies.get("id"),
         };
         try {
             console.log(userData)
             createNewUserAccount({
-                full_name: userData.full_name,
-                phone_number: userData.phone_number,
-                bank_branch: userData.bank_branch,
-                dob: userData.dob,
-                email: userData.email,
-                password: userData.password,
+                customer_id: userData.customer_id,
+                deposit_amount: userData.deposit_amount,
+                user_id: Cookies.get("id"),
             })
         } catch (error) {
             console.log(error)
@@ -91,30 +86,9 @@ export default function SignUp() {
                             <TextField
                                 required
                                 fullWidth
-                                id="bank_branch"
-                                label="Bank Branch"
-                                name="bank_branch"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
                                 id="depositAmount"
                                 label="Deposit Amount"
                                 name="depositAmount"
-                                autoComplete="depositAmount"
-                            />
-
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="phone_number"
-                                label="Phone number"
-                                name="phone_number"
-                                autoComplete="phone_number"
                             />
                         </Grid>
                     </Grid>
