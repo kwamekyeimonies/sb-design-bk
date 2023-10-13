@@ -12,18 +12,17 @@ type Config struct {
 	REDIS_PASSWORD    string `mapstructure:"REDIS_PASSWORD"`
 	REDIS_SERVER      string `mapstructure:"REDIS_SERVER"`
 	REDIS_SERVER_PORT string `mapstructure:"REDIS_SERVER_PORT"`
-	OTP_TOKEN_SECRET  string `mapstructure:"OTP_TOKEN_SECRET"`
 	JWT_SECRET_KEY    string `mapstructure:"JWT_SECRET_KEY"`
 	PASSWORD_KEY      string `mapstructure:"PASSWORD_KEY"`
 	ACCESS_REGION     string `mapstructure:"ACCESS_REGION"`
 	ACCESS_KEYS       string `mapstructure:"ACCESS_KEYS"`
-	SECRET_ACESS_KESY string `mapstructure:"SECRET_ACESS_KEYS"`
+	SECRET_ACESS_KEYS string `mapstructure:"SECRET_ACESS_KEYS"`
 }
 
 func LoadInitializer(path string) (cfg Config, err error) {
 	viper.AddConfigPath(path)
 	viper.SetConfigType("env")
-	viper.SetConfigName("server_keys")
+	viper.SetConfigName("keys")
 	viper.AutomaticEnv()
 
 	err = viper.ReadInConfig()
