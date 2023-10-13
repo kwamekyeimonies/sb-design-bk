@@ -40,7 +40,7 @@ func (customerS *CustomerServiceImpl) CreateAccount(customer *models.Customer, c
 		CurrencyType:   customer.CurrencyType,
 		AccountBalance: customer.AccountBalance,
 		InitialDeposit: customer.InitialDeposit,
-		CurrentAmount:  customer.CurrentAmount,
+		CurrentAmount:  customer.InitialDeposit,
 		CustomerID:     dbResponse.ID,
 		UserID:         customer.UserId,
 		CreatedAt:      time.Now(),
