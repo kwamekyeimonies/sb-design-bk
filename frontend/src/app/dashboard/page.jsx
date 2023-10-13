@@ -1,8 +1,11 @@
 import React from 'react'
+import ResponsiveAppBar from './side-nav'
 
 const Dashboard = () => {
     return (
-        <div>Dashboard</div>
+        <div>
+            <ResponsiveAppBar />
+        </div>
     )
 }
 

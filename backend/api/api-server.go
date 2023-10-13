@@ -15,8 +15,10 @@ func ApiServer() {
 	webServer.Use(middleware.CORSMiddleware())
 
 	router.NonAuthenticatedRoutes(&webServer.RouterGroup)
+
 	authenticatedRoutes := webServer.Group("/api/v1/")
-	authenticatedRoutes.Use(middleware.JWTMiddleware())
+	// authenticatedRoutes.Use(middleware.JWTMiddleware())
+	router.AuthenticatedRoutes(authenticatedRoutes)
 
 	config, err := config.LoadInitializer("")
 	if err != nil {

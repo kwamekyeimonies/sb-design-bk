@@ -3,6 +3,7 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 
+	"github.com/kwamekyeimonies/sb-design-bk/controllers/customer"
 	"github.com/kwamekyeimonies/sb-design-bk/controllers/users"
 )
 
@@ -16,5 +17,8 @@ func NonAuthenticatedRoutes(routes *gin.RouterGroup) {
 
 func AuthenticatedRoutes(routes *gin.RouterGroup) {
 	// userRoutes := users.UserController{}
+	customerRoutes := customer.CustomerController{}
+
+	routes.POST("/customer/create", customerRoutes.CreateCustomerController)
 
 }
